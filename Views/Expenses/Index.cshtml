@@ -1,0 +1,40 @@
+﻿@model IEnumerable<FinanceApp.Models.Expense> 
+@*
+    IEnumerable is a collection type that can hold multiple Expense objects.
+    
+    What the difference is between IEnumerable and List?
+    
+    IEnumerable is an interface that represents a sequence of elements that can be enumerated, while List is a concrete implementation of a collection that can be modified.
+*@
+
+@{
+    ViewData["Title"] = "Expenses";
+}
+
+<h2>My Expenses</h2>
+
+<div class="container">
+    <table class="table table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th>Id</th>
+                <th>Description</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Category</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var expense in Model)
+            {
+                <tr>
+                    <td>@expense.Id</td>
+                    <td>@expense.Description</td>
+                    <td>@expense.Amount.ToString("C")</td>
+                    <td>@expense.Date.ToShortDateString()</td>
+                    <td>@expense.Category</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
