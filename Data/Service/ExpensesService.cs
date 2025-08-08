@@ -13,13 +13,24 @@ namespace FinanceApp.Data.Service {
             await _context.SaveChangesAsync();
         }
 
-        public Task DeleteExpenseAsync(int id) {
-            throw new NotImplementedException();
-        }
 
         public async Task<IEnumerable<Expense>> GetAllExpensesAsync() {
             var expenses = await _context.Expenses.ToListAsync();
             return expenses;
+        }
+
+        public IQueryable GetChartData() {
+            var data = _context.Expenses
+                .GroupBy(e => e.Category)
+                .Select(g => new {
+                    Category = g.Key,
+                    TotalAmount = g.Sum(e => e.Amount)
+                });
+            return data;
+        }
+
+        public Task DeleteExpenseAsync(int id) {
+            throw new NotImplementedException();
         }
 
         public Task<Expense> GetExpenseByIdAsync(int id) {
